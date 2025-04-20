@@ -11,8 +11,6 @@ This signaling server facilitates WebRTC peer connections by:
 
 ## Quick Start
 
-### Local Development
-
 ```bash
 swift build
 swift run
