@@ -1,27 +1,57 @@
-# SignalingServer
+# WebRTC Signaling Server
 
-💧 A project built with the Vapor web framework.
+A lightweight WebSocket-based signaling server for WebRTC applications, built with Swift and Vapor.
 
-## Getting Started
+## Overview
 
-To build the project using the Swift Package Manager, run the following command in the terminal from the root of the project:
+This signaling server facilitates WebRTC peer connections by:
+- Relaying signaling messages between WebRTC peers
+- Managing user presence and connection events
+- Handling WebRTC signaling protocol (offers, answers, ICE candidates)
+
+## Quick Start
+
+### Local Development
+
 ```bash
 swift build
-```
-
-To run the project and start the server, use the following command:
-```bash
 swift run
 ```
 
-To execute tests, use the following command:
-```bash
-swift test
-```
+The server will be available at `http://localhost:8080`.
 
-### See more
+## API
 
-- [Vapor Website](https://vapor.codes)
-- [Vapor Documentation](https://docs.vapor.codes)
-- [Vapor GitHub](https://github.com/vapor)
-- [Vapor Community](https://github.com/vapor-community)
+### WebSocket Endpoint
+
+Connect to the WebSocket endpoint at `/signals` to exchange WebRTC signaling data.
+
+### Event Types
+
+The server supports the following event types:
+
+- `user-joined`: Announces when a new user joins
+- `offer`: Contains SDP offer for establishing connection
+- `answer`: Contains SDP answer in response to an offer
+- `ice-candidate-generated`: Shares ICE candidates for connection
+- `ice-candidates-removed`: Notifies when ICE candidates are removed
+
+## Architecture
+
+- Built on Swift Vapor framework
+- Uses Swift Concurrency (async/await)
+- Utilizes Swift NIO for non-blocking networking
+- Actor-based client management for thread safety
+
+## Client Integration
+
+Clients should:
+1. Connect to the WebSocket endpoint
+2. Announce themselves with a user-joined event
+3. Listen for other peers joining
+4. Exchange WebRTC offers/answers and ICE candidates
+5. Establish direct peer connections once signaling is complete
+
+## License
+
+[MIT License](LICENSE)
